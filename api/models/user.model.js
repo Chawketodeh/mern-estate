@@ -16,10 +16,11 @@ const userSchema = new mongoose.Schema({
         required:true,
     },
     avatar: {
-        type:String,
-        default: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw27Wv3euB7_P0yqtY0EwXpm&ust=1745333668170000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiatt2w6YwDFQAAAAAdAAAAABAE',
-    },
+        type: String,
+        default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+      },           
 },
+
 {timestamps:true});
 
 const User = mongoose.model('User', userSchema);
