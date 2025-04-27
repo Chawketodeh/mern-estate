@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 dotenv.config();
 
@@ -17,6 +18,13 @@ mongoose
   });
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // allow frontend origin
+    credentials: true, // allow cookies to be sent
+  })
+);
 
 app.use(express.json());
 
