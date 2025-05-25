@@ -7,12 +7,18 @@ import { useNavigate } from "react-router-dom";
 export default function OAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleGoogleClick = async () => {
     try {
-      const Provider = new GoogleAuthProvider();
-      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
 
-      const result = await signInWithPopup(auth, Provider);
+      // 👇 Add this line to force the account chooser
+      provider.setCustomParameters({
+        prompt: "select_account",
+      });
+
+      const auth = getAuth(app);
+      const result = await signInWithPopup(auth, provider);
 
       const res = await fetch("/api/auth/google", {
         method: "POST",
@@ -25,6 +31,7 @@ export default function OAuth() {
           photo: result.user.photoURL,
         }),
       });
+
       const data = await res.json();
       dispatch(signInSuccess(data));
       navigate("/");
@@ -32,12 +39,12 @@ export default function OAuth() {
       console.log("could not sign in with google", error);
     }
   };
+
   return (
     <button
       onClick={handleGoogleClick}
       type="button"
-      className="bg-red-700 text-white p-3 rounded-lg uppercase
-    hover:opacity-95"
+      className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95"
     >
       continue with google
     </button>
